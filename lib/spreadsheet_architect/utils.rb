@@ -137,46 +137,25 @@ module SpreadsheetArchitect
       return options.merge(header_style: header_style, row_style: row_style, sheet_name: sheet_name)
     end
 
-    def self.convert_styles_to_ods(styles={})
-      styles = {} unless styles.is_a?(Hash)
-      styles = self.stringify_keys(styles)
-
-      property_styles = {}
-
-      text_styles = {}
-      text_styles['font-weight'] = styles.delete('bold') ? 'bold' : styles.delete('font-weight')
-      text_styles['font-size'] = styles.delete('font_size') || styles.delete('font-size')
-      text_styles['font-style'] = styles.delete('italic') ? 'italic' : styles.delete('font-style')
-      if styles['underline']
-        styles.delete('underline')
-        text_styles['text-underline-style'] = 'solid'
-        text_styles['text-underline-type'] = 'single'
-      end
-      if styles['align']
-        text_styles['align'] = true
-      end 
-      if styles['color'].respond_to?(:sub) && !styles['color'].empty?
-        text_styles['color'] = "##{styles.delete('color').sub('#','')}"
-      end
-      text_styles.delete_if{|_,v| v.nil?}
-      property_styles['text'] = text_styles
-      
-      cell_styles = {}
-      styles['background_color'] ||= styles.delete('background-color')
-      if styles['background_color'].respond_to?(:sub) && !styles['background_color'].empty?
-        cell_styles['background-color'] = "##{styles.delete('background_color').sub('#','')}"
-      end
-
-      cell_styles.delete_if{|_,v| v.nil?}
-      property_styles['cell'] = cell_styles
-
-      return property_styles
-    end
 
     private
 
     def self.deep_clone(x)
       Marshal.load(Marshal.dump(x))
+    end
+
+    def self.check_options_types(options={})
+      self.check_type(options, :spreadsheet_columns, Array)
+      self.check_type(options, :instances, Array)
+      self.check_type(options, :headers, [TrueClass, FalseClass, Array])
+      self.check_type(options, :sheet_name, String)
+      self.check_type(options, :header_style, Hash)
+      self.check_type(options, :row_style, Hash)
+      self.check_type(options, :column_styles, Array)
+      self.check_type(options, :range_styles, Array)
+      self.check_type(options, :merges, Array)
+      self.check_type(options, :borders, Array)
+      self.check_type(options, :column_widths, Array)
     end
 
     def self.check_type(options, option_name, type)
@@ -195,19 +174,6 @@ module SpreadsheetArchitect
       end
     end
 
-    def self.check_options_types(options={})
-      self.check_type(options, :spreadsheet_columns, Array)
-      self.check_type(options, :instances, Array)
-      self.check_type(options, :headers, [TrueClass, FalseClass, Array])
-      self.check_type(options, :sheet_name, String)
-      self.check_type(options, :header_style, Hash)
-      self.check_type(options, :row_style, Hash)
-      self.check_type(options, :column_styles, Array)
-      self.check_type(options, :range_styles, Array)
-      self.check_type(options, :merges, Array)
-      self.check_type(options, :borders, Array)
-      self.check_type(options, :column_widths, Array)
-    end
 
     # only converts the first 2 levels
     def self.stringify_keys(hash={})

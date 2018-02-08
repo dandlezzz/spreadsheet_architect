@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 gemspec
 
-gem 'axlsx'
-gem 'axlsx_styler'
 gem 'rodf'
 gem 'responders'
 

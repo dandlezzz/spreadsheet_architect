@@ -167,8 +167,6 @@ end
 |**instances**<br>*Array*| |**Required only for Non-ActiveRecord classes** Array of class/model instances.|
 |**headers**<br>*2D Array*|This defaults to your models custom spreadsheet_columns method or `self.column_names.collect(&:titleize)`|Pass `false` to skip the header row.|
 |**sheet_name**<br>*String*|The class name||
-|**header_style**<br>*Hash*|`{background_color: "AAAAAA", color: "FFFFFF", align: :center, font_name: 'Arial', font_size: 10, bold: false, italic: false, underline: false}`|See all available style options [here](https://github.com/westonganger/spreadsheet_architect/blob/master/docs/axlsx_styles_reference.md)|
-|**row_style**<br>*Hash*|`{background_color: nil, color: "000000", align: :left, font_name: 'Arial', font_size: 10, bold: false, italic: false, underline: false, format_code: nil}`|Styles for non-header rows. See all available style options [here](https://github.com/westonganger/spreadsheet_architect/blob/master/docs/axlsx_styles_reference.md)|
 |**column_styles**<br>*Array*||[See this example for usage](https://github.com/westonganger/spreadsheet_architect/blob/master/examples/complex_xlsx_styling.rb)|
 |**range_styles**<br>*Array*||[See this example for usage](https://github.com/westonganger/spreadsheet_architect/blob/master/examples/complex_xlsx_styling.rb)|
 |**merges**<br>*Array*||Merge cells. [See this example for usage](https://github.com/westonganger/spreadsheet_architect/blob/master/examples/complex_xlsx_styling.rb)|
@@ -281,26 +279,6 @@ SpreadsheetArchitect.default_options = {
   column_types: []
 }
 ```
-
-# Complex XLSX Example with Styling
-See this example: https://github.com/westonganger/spreadsheet_architect/blob/master/examples/complex_xlsx_styling.rb
-
-
-# Multi Sheet XLSX or ODS spreadsheets
-```ruby
-# Returns corresponding spreadsheet libraries object
-package = SpreadsheetArchitect.to_axlsx_package({data: data, headers: headers})
-SpreadsheetArchitect.to_axlsx_package({data: data, headers: headers}, package) # to combine two sheets to one file
-
-spreadsheet = SpreadsheetArchitect.to_rodf_spreadsheet({data: data, headers: headers})
-SpreadsheetArchitect.to_rodf_spreadsheet({data: data, headers: headers}, spreadsheet) # to combine two sheets to one file
-```
-
-See this example: https://github.com/westonganger/spreadsheet_architect/blob/master/examples/multi_sheet_spreadsheets.rb
-
-
-# Axlsx Style Reference
-I have compiled a list of all available style options for axlsx here: https://github.com/westonganger/spreadsheet_architect/blob/master/docs/axlsx_style_reference.md
 
 
 # Credits

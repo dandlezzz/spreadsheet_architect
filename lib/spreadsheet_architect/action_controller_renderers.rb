@@ -1,6 +1,6 @@
 if defined? ActionController
 
-  ['csv','ods','xlsx'].each do |format|
+  ['csv'].each do |format|
     ActionController::Renderers.add(format.to_sym) do |data, options|
       if data.is_a?(ActiveRecord::Relation)
         options[:filename] = data.klass.name.pluralize
